@@ -1,5 +1,5 @@
 {
-  "name": "-vueengineeringcommonconfig",
+  "name": "vue-engineering",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,9 +12,13 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@types/node": "^20.6.3",
     "@vitejs/plugin-vue": "^4.2.3",
+    "pinia": "^2.1.6",
     "typescript": "^5.0.2",
+    "unplugin-auto-import": "^0.16.6",
     "vite": "^4.4.5",
-    "vue-tsc": "^1.8.5"
+    "vue-tsc": "^1.8.5",
+    "web-localstorage-plus": "^0.0.19"
   }
 }

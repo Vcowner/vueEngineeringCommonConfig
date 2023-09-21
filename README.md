@@ -1,18 +1,67 @@
-# Vue 3 + TypeScript + Vite
+# vueEngineeringCommonConfig
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+前端工程化配置：vite4+vue3+ts+pinia+vue-router+axios+commit 规范+代码质量检验
 
-## Recommended IDE Setup
+## 目录
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- store
+  - 方式 pinia 相关状态
+- directive
+  - 自定义指令相关 v-auth
+- http
+  - 处理 axios 请求的封装和调用
 
-## Type Support For `.vue` Imports in TS
+## 依赖
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- 设置自动导入
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+  - 1、安装
+    `pnpm install unplugin-auto-import -D`
+  - 2、在 vite.config.ts 中配置
+    ```
+    import AutoImport from 'unplugin-auto-import/vite'
+        export default defineConfig({
+            plugins: [...,AutoImport()],
+        ...
+        });
+    ```
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## 持久化数据
+
+- 集成 web-storage-plus 持久化数据使用该插件
+
+  - 基于 localStorage 做了一层封装，使其更易用、更简洁、更强大
+
+  - 1、安装
+    `pnpm install web-localstorage-plus`
+  - 2、在 main.ts 中配置
+
+  ```
+  import createStorage from 'web-localstorage-plus'
+  createStorage({
+      rootName:'spp-storage'
+  })
+  ```
+
+  - 3、在 .vue 中使用
+
+  ```
+  <script lang="ts" setup>
+      import { useStorage } from 'web-localstorage-plus'
+
+      const storage = useStorage()
+      storage.setItem('user',{
+      name:'spp',
+      age:28
+      })
+  </script>
+  ```
+
+## 非持久化数据
+
+- pinia
+  - 对于非持久化数据，可以使用 pinia 来进行管理，它托管了全局状态并且提供了响应能力[传送门](https://pinia.web3doc.top/getting-started.html)。
+  - 1、安装
+  ```
+   pnpm install pinia
+  ```
