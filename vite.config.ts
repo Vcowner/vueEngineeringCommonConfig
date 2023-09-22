@@ -3,7 +3,7 @@
  * @Description: vite 配置
  * @Date: 2023-09-20 16:51:42
  * @LastEditors: liaokt
- * @LastEditTime: 2023-09-21 14:48:55
+ * @LastEditTime: 2023-09-22 10:37:57
  */
 import { defineConfig } from "vite";
 // pnpm install @types/node --D
@@ -11,7 +11,7 @@ import { resolve } from "node:path";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import eslint from "@rollup/plugin-eslint";
+import eslintPlugin from "vite-plugin-eslint";
 import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
@@ -25,8 +25,8 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()]
     }),
-    eslint({
-      include: ["src/**"]
+    eslintPlugin({
+      include: ["src/**/*.ts", "src/**/*.vue", "src/*.ts", "src/*.vue"]
     })
   ],
   // 配置别名

@@ -101,7 +101,7 @@
     `pnpm install @typescript-eslint/parser @typescript-eslint/eslint-plugin -D`
 - 3、按环境区分校验规则
   - 1）、安装
-    `pnpm install cross-env @rollup/plugin-eslint -D`
+    `pnpm install vite-plugin-eslint -D`
   - 2）、修改命令行， 以 production 为例子
   ```
   "scripts": {
@@ -109,7 +109,7 @@
     "build": "cross-env NODE_ENV=production && vue-tsc --noEmit && vite build"
   },
   ```
-  - 3）、将 rollup 插件加入 vite 的 plugin
+  - 3）、将 eslintPlugin 插件加入 vite 的 plugin
 
 ### prettier
 
