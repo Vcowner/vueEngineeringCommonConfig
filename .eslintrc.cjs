@@ -3,7 +3,7 @@
  * @Description: eslint 校验配置
  * @Date: 2023-09-21 14:37:27
  * @LastEditors: liaokt
- * @LastEditTime: 2023-09-21 14:59:03
+ * @LastEditTime: 2023-09-26 17:32:30
  */
 
 // 判断当前环境
@@ -35,7 +35,10 @@ module.exports = {
     "no-multiple-empty-lines": ["error", { max: 1 }], // 不允许多个空行
     "prefer-const": "off", // 使用 let 关键字声明但在初始分配后从未重新分配的变量，要求使用 const
     "no-use-before-define": "off", // 禁止在 函数/类/变量 定义之前使用它们
-    "vue/no-setup-props-destructure": "off",
+    eqeqeq: "warn", // 要求使用 === 和 !==
+    "no-useless-return": "warn", // 禁止多余的 return 语句
+    "no-shadow": "off", // 禁止变量声明与外层作用域的变量同名
+
     // typeScript (https://typescript-eslint.io/rules)
     "@typescript-eslint/no-unused-vars": "warn", // 禁止定义未使用的变量
     "@typescript-eslint/prefer-ts-expect-error": "warn", // 禁止使用 @ts-ignore
@@ -49,6 +52,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off", // 不允许使用后缀运算符的非空断言(!)
 
     // vue (https://eslint.vuejs.org/rules)
+    "vue/no-setup-props-destructure": "off",
     "vue/script-setup-uses-vars": "error", // 防止<script setup>使用的变量<template>被标记为未使用，此规则仅在启用该no-unused-vars规则时有效
     "vue/v-slot-style": "error", // 强制执行 v-slot 指令样式
     "vue/no-mutating-props": "error", // 不允许改变组件 prop

@@ -1,22 +1,33 @@
 {
   "compilerOptions": {
+    // 指定ECMAScript目标版本
     "target": "ES2020",
     "useDefineForClassFields": true,
+    // 指定生成哪个模块系统代码
     "module": "ESNext",
+    // 编译过程中需要引入的库文件的列表
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
+    // isolatedModules 设置为 true 时，如果某个 ts 文件中没有一个import or export 时，ts 则认为这个模块不是一个 ES Module 模块，它被认为是一个全局的脚本，
     "isolatedModules": true,
     "noEmit": true,
+    // 支持jsx语法
     "jsx": "preserve",
 
     /* Linting */
+    // 启用所有严格类型检查选项
     "strict": true,
+    // 在表达式和声明上有隐含的 any 类型时报错
+    "noImplicitAny": false,
+    // 有未使用的变量时，抛出错误
     "noUnusedLocals": true,
+    // 有未使用的参数时，抛出错误
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
@@ -26,6 +37,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  // 解析的文件
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.jsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

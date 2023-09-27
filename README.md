@@ -8,8 +8,12 @@
   - 方式 pinia 相关状态
 - directive
   - 自定义指令相关 v-auth
-- http
+- api
   - 处理 axios 请求的封装和调用
+- hooks
+  - 封装一些常用的 hooks
+- interface
+  - 接口定义
 
 ## 依赖
 
@@ -57,14 +61,69 @@
   </script>
   ```
 
+- 有两种 pinia 持久化数据的方式
+
+  - 1、使用 @web-localstorage-plus/pinia
+
+        - 1）、安装
+
+        ```
+        pnpm install @web-localstorage-plus/pinia
+        ```
+
+        - 2）、 在 main.ts 中设置持久化
+
+        ```
+        import createStorage from 'web-localstorage-plus';
+        import setPiniaPersist from '@web-localstorage-plus/pinia';
+        // 设置根存储库
+        createStorage({
+        rootName: 'spp-storage',
+        });
+        // 将pinia中的数据持久化到本地
+        setPiniaPersist(pinia);
+
+        ```
+
+        - 3）、在 vite.config.ts 中引入热更新插件
+        ```
+            import { getPlugin } from '@web-localstorage-plus/pinia';
+
+            const piniaHmrPlugin = getPlugin('vite');
+            export default defineConfig({
+                ...,
+                plugins:[piniaHmrPlugin(resolve(__dirname, 'src/store'))]
+            })
+
+        ```
+
+    - 2、使用 pinia 持久化数据，我们使用这个
+
+      - 1）、安装
+
+      ```
+      pnpm install pinia-plugin-persist -S // 如果需要数据持久化，就安装这个
+      ```
+
+      - 2）、直接在 store/index.vue 中配置
+
+      ```
+      import piniaPluginPersist from 'pinia-plugin-persist'
+      const store = createPinia()
+      store.use(piniaPluginPersist)
+      ```
+
 ## 非持久化数据
 
 - pinia
   - 对于非持久化数据，可以使用 pinia 来进行管理，它托管了全局状态并且提供了响应能力[传送门](https://pinia.web3doc.top/getting-started.html)。
   - 1、安装
-  ```
-   pnpm install pinia
-  ```
+
+```
+
+pnpm install pinia
+
+```
 
 ## 集成 vue-router4
 
@@ -81,8 +140,8 @@
 - 1、安装
   `pnpm install element-plus -D`
 - 2、按需自动导入
-  - 安装
-    `pnpm install unplugin-vue-components unplugin-auto-import -D`
+- 安装
+  `pnpm install unplugin-vue-components unplugin-auto-import -D`
 - 3、在 vite.config.ts 中配置
 
 ## 集成 axios
@@ -97,19 +156,23 @@
 - 1、安装
   `pnpm install eslint eslint-plugin-vue -D`
 - 2、兼容 ts
-  - 安装
-    `pnpm install @typescript-eslint/parser @typescript-eslint/eslint-plugin -D`
+- 安装
+  `pnpm install @typescript-eslint/parser @typescript-eslint/eslint-plugin -D`
 - 3、按环境区分校验规则
-  - 1）、安装
-    `pnpm install vite-plugin-eslint -D`
-  - 2）、修改命令行， 以 production 为例子
-  ```
-  "scripts": {
-    ...
-    "build": "cross-env NODE_ENV=production && vue-tsc --noEmit && vite build"
-  },
-  ```
-  - 3）、将 eslintPlugin 插件加入 vite 的 plugin
+- 1）、安装
+  `pnpm install vite-plugin-eslint -D`
+- 2）、修改命令行， 以 production 为例子
+
+```
+
+"scripts": {
+...
+"build": "cross-env NODE_ENV=production && vue-tsc --noEmit && vite build"
+},
+
+```
+
+- 3）、将 eslintPlugin 插件加入 vite 的 plugin
 
 ### prettier
 
@@ -126,38 +189,79 @@
   `"prepare": "husky install"`
 - 3、注册 hook - 使用 pre-commit 钩子来拦截提交请求
 
-  ```
-  npx husky add .husky/pre-commit "npm run check"
-  git add .husky/pre-commit
+```
 
-  ```
+npx husky add .husky/pre-commit "npm run check"
+git add .husky/pre-commit
+
+```
 
 - git commit 提交时，会先执行 pre-commit 钩子，再执行 commit, check 脚本 是针对全部文件的，因此我们需要借助另一个 npm 包 帮我们把当前更改的文件提取出来单独校验
 - 4、安装 lint-staged
   `pnpm install lint-staged -D`
-  - 4.1、修改 package.json 配置
-  ```
-  "lint-staged": {
-    "*.{js,ts,vue}": [
-      "npm run eslint",
-      "prettier --parser=typescript --write"
-    ]
-  }
-  ```
-  - 4.2、与 husky 配合使用
-  ```
-  "scripts": {
-    ...
-    "check": "lint-staged"
-  },
-  ```
+- 4.1、修改 package.json 配置
+
+```
+
+"lint-staged": {
+"\*.{js,ts,vue}": [
+"npm run eslint",
+"prettier --parser=typescript --write"
+]
+}
+
+```
+
+- 4.2、与 husky 配合使用
+
+```
+
+"scripts": {
+...
+"check": "lint-staged"
+},
+
+```
+
 - 5、安装 commitlint 对 commit 提交进行约束
   `pnpm install @commitlint/cli @commitlint/config-conventional -D`
 
-  - 5.1、将其校验文职放在 check 脚本执行前
+- 5.1、将其校验文职放在 check 脚本执行前
 
-  ```
-  npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
-  ```
+```
 
-  - 5.2、配置 commitlint.config.js
+npx husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'
+
+```
+
+- 5.2、配置 commitlint.config.js
+
+## CSS 样式重置
+
+### 1、 normalize.css
+
+    - 1、安装
+     ``` pnpm install normalize.css ```
+    - 2、在 main.ts 引入
+    ``` import 'normalize.css' ```
+
+### 2、 reset.css
+
+### 3、 common.css
+
+## stylelint 校验
+
+- 1、安装
+  `pnpm install stylelint stylelint-config-standard -D`
+- 2、配置文件 .stylelintrc.cjs
+- 3、package.json 配置
+
+```
+
+"scripts": {
+...
+"stylelint": "stylelint \"**/*.{css,scss,less}\"",
+"stylelint:fix": "stylelint --fix \"**/*.{css,scss,less}\""
+},
+
+```
