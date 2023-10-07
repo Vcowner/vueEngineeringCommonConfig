@@ -6,7 +6,7 @@
  * @LastEditTime: 2023-09-27 11:27:36
  */
 import { IResponseData } from "@/interface/request";
-import { axios } from "./request";
+import { axios } from "./request/request";
 
 export const useRequest = new (class {
   loginApi: string;
