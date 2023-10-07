@@ -3,14 +3,18 @@
  * @Description: vite 配置
  * @Date: 2023-09-20 16:51:42
  * @LastEditors: liaokt
- * @LastEditTime: 2023-09-27 10:18:20
+ * @LastEditTime: 2023-10-07 16:54:22
  */
 import { defineConfig } from "vite";
 // pnpm install @types/node --D
 import { resolve } from "node:path";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
+// 使用该插件来引入 ui 库的时候， message, notification, toast 等引入样式不生效
+// import Components from "unplugin-vue-components/vite";
+// 要使用该插件
+import { ElementPlusResolve, createStyleImportPlugin } from "vite-plugin-style-import";
+import postcssPresetEnv from "postcss-preset-env";
 import eslintPlugin from "vite-plugin-eslint";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import vue from "@vitejs/plugin-vue";
@@ -25,8 +29,20 @@ export default defineConfig({
     AutoImport({
       resolvers: [ElementPlusResolver()]
     }),
-    Components({
-      resolvers: [ElementPlusResolver()]
+    // Components({
+    //   resolvers: [ElementPlusResolver()]
+    // }),
+    createStyleImportPlugin({
+      resolves: [ElementPlusResolve()],
+      libs: [
+        {
+          libraryName: "element-plus",
+          esModule: true,
+          resolveStyle: (name: string) => {
+            return `element-plus/theme-chalk/${name}.css`;
+          }
+        }
+      ]
     }),
     eslintPlugin({
       include: ["src/**/*.ts", "src/**/*.vue", "src/*.ts", "src/*.vue"]
@@ -43,8 +59,14 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
-        additionalData: '@import "@/assets/styles/common.less";'
+        additionalData: '@import "@/assets/styles/common.less";',
+        math: "always"
       }
+    },
+    devSourcemap: true,
+    // 兼容性前缀
+    postcss: {
+      plugins: [postcssPresetEnv()]
     }
   },
   // 设置代理
