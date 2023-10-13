@@ -3,11 +3,16 @@
  * @Description: 路由配置
  * @Date: 2023-09-21 11:26:03
  * @LastEditors: liaokt
- * @LastEditTime: 2023-09-21 14:03:10
+ * @LastEditTime: 2023-10-08 10:55:01
  */
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "Home",
+    redirect: "/login"
+  },
   {
     path: "/login",
     name: "Login",

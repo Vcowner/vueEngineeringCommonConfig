@@ -3,14 +3,13 @@
  * @Description: 请求接口
  * @Date: 2023-09-27 11:05:45
  * @LastEditors: liaokt
- * @LastEditTime: 2023-09-28 15:05:00
+ * @LastEditTime: 2023-10-07 17:00:21
  * @remark 参考
  *  1、https://juejin.cn/post/7173670666326474783?from=search-suggest
  *  2、https://juejin.cn/post/7124573626161954823?searchId=20230927113449220C1E19FBF6A5B15362
  */
 
 import { AxiosRequestConfig } from "axios";
-import { config } from "process";
 
 /**
  * 普通数据响应

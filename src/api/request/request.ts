@@ -3,7 +3,7 @@
  * @Description:  axios 配置
  * @Date: 2023-09-27 10:38:50
  * @LastEditors: liaokt
- * @LastEditTime: 2023-10-07 09:39:54
+ * @LastEditTime: 2023-10-07 16:59:39
  */
 
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
@@ -59,4 +59,4 @@ const makeRequest: MakeRequest = <T>(config: RequestConfig) => {
   };
 };
 
-export { makeRequest };
+export { makeRequest, axios };
